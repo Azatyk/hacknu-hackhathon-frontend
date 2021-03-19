@@ -10,19 +10,18 @@
       >
     </div>
     <div class="slide-button">
-      <ion-button @click="$emit('next-click')" expand="full">{{
-        buttonLabel
-      }}</ion-button>
+      <next-link>Далее</next-link>
     </div>
   </div>
 </template>
 
 <script>
-import { IonButton, IonText } from "@ionic/vue";
+import { IonText } from "@ionic/vue";
+import nextLink from "@/components/slider/cedra-slide-next.component";
 
 export default {
   name: "slideContent",
-  components: { IonButton, IonText },
+  components: { IonText, nextLink },
   props: {
     title: String,
     description: String,

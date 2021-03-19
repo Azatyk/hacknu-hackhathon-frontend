@@ -42,8 +42,8 @@
 <script lang="ts">
 import { IonSlides, IonSlide } from "@ionic/vue";
 import { defineComponent } from "vue";
-import SlideContent from "@/views/slideContent.vue";
 import aituBridge from "@btsd/aitu-bridge";
+import SlideContent from "@/components/slider/cedra-slide-content.component.vue";
 
 export default defineComponent({
   name: "Slider",

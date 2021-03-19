@@ -1,39 +1,49 @@
 <template>
-  <ion-slides ref="slider" class="slides" pager="true" :options="slideOpts">
+  <ion-slides
+    ref="slider"
+    class="slides"
+    pager="true"
+    :options="slideOpts"
+    :class="{ 'slider-open': isSliderOpen }"
+  >
     <ion-slide>
       <SlideContent
-        v-bind:img="'/assets/slide1.png'"
-        v-bind:title="`Привет, ${data?.name ?? ''} Мини-приложения в Aitu`"
-        v-bind:description="'Расскажем, что это и как использовать aitu.apps для своего бизнеса'"
-        v-bind:button-label="'Я готов!'"
+        :img="'/assets/slide1-image.svg'"
+        v-bind:title="`Привет, ${data?.name ?? ''}. Мы рады, что ты с нами`"
+        v-bind:description="'Cedra поможет найти твою вторую половинку. Давай покажу, что дальше'"
+        v-bind:button-label="'Начать'"
         v-on:next-click="next"
+        v-on:close-slider="closeSlider()"
       ></SlideContent>
     </ion-slide>
     <ion-slide>
       <SlideContent
-        v-bind:img="'/assets/slide2.png'"
-        v-bind:title="'+800.000 пользователей Aitu'"
-        v-bind:description="'Могут увидеть ваше мини-приложение и стать его пользователями'"
-        v-bind:button-label="'Интересно'"
+        v-bind:img="'/assets/slide2-image.svg'"
+        v-bind:title="'Добавь фотографию'"
+        v-bind:description="'Нужна лишь одна фотография, ее будут видеть все остальные'"
+        v-bind:button-label="'Дальше'"
         v-on:next-click="next"
+        v-on:close-slider="closeSlider()"
       ></SlideContent>
     </ion-slide>
     <ion-slide>
       <SlideContent
-        v-bind:img="'/assets/slide3.png'"
-        v-bind:title="'Всегда под рукой'"
-        v-bind:description="'Каталог с мини-приложениями находится на центральной вкладке. Пользователи легко его найдут'"
-        v-bind:button-label="'Что ещё?'"
+        v-bind:img="'/assets/slide3-image.svg'"
+        v-bind:title="'Ставьте лайки понравившимся людям'"
+        v-bind:description="'Ставьте лайки людям, которые вам по душе и ждите от них взаимности'"
+        v-bind:button-label="'Дальше'"
         v-on:next-click="next"
+        v-on:close-slider="closeSlider()"
       ></SlideContent>
     </ion-slide>
     <ion-slide>
       <SlideContent
-        v-bind:img="'/assets/slide4.png'"
-        v-bind:title="'Баннер с вашим предложением'"
-        v-bind:description="'Уникальная скидка, спецпредложение или акция. Донесите ценное предложение до всех пользователей Aitu'"
-        v-bind:button-label="'Далее'"
-        v-on:next-click="next"
+        v-bind:img="'/assets/slide4-image.svg'"
+        v-bind:title="'Создавайте пары и общайтесь'"
+        v-bind:description="'Получайте взаимные лайки и создавайте лимонные пары'"
+        v-bind:button-label="'Понятно'"
+        :needButtonArrow="false"
+        v-on:close-slider="closeSlider()"
       ></SlideContent>
     </ion-slide>
   </ion-slides>
@@ -47,12 +57,23 @@ import SlideContent from "@/components/slider/cedra-slide-content.component.vue"
 
 export default defineComponent({
   name: "Slider",
+
+  props: {
+    isSliderOpen: Boolean,
+  },
+
   components: { SlideContent, IonSlides, IonSlide },
+
   methods: {
     next() {
       this.$el.slideNext();
     },
+
+    closeSlider() {
+      this.$emit("close-slider");
+    },
   },
+
   async data() {
     try {
       const data = await aituBridge.getMe();
@@ -61,6 +82,7 @@ export default defineComponent({
       console.log(e);
     }
   },
+
   setup() {
     const slideOpts = {
       initialSlide: 0,
@@ -71,8 +93,20 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .slides {
-  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 5;
+  transform: translateY(100vh);
+  transition: 400ms ease-in-out;
+}
+
+.slider-open {
+  transform: translateY(0);
+  transition: 400ms ease-in-out;
 }
 </style>

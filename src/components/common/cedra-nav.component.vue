@@ -15,12 +15,20 @@
   </nav>
 </template>
 
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({});
+</script>
+
+
 <style scoped>
 .nav {
   padding: 30px 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 2;
 }
 
 .nav__link {

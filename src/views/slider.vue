@@ -9,6 +9,9 @@
     <ion-slide>
       <cedra-gender-slide @next="navigateToNextSlide" />
     </ion-slide>
+    <ion-slide>
+      <cedra-orientation-slide @next="navigateToNextSlide" />
+    </ion-slide>
   </ion-slides>
 </template>
 
@@ -19,6 +22,7 @@ import aituBridge from "@btsd/aitu-bridge";
 import CedraWelcomeSlide from "@/components/slider/cedra-welcome-slide.component.vue";
 import CedraAgeSlide from "@/components/slider/cedra-age-slide.component.vue";
 import CedraGenderSlide from "@/components/slider/cedra-gender-slide.component.vue";
+import CedraOrientationSlide from "@/components/slider/cedra-orientation-slide.component.vue";
 
 export default defineComponent({
   components: {
@@ -27,6 +31,7 @@ export default defineComponent({
     "cedra-welcome-slide": CedraWelcomeSlide,
     "cedra-age-slide": CedraAgeSlide,
     "cedra-gender-slide": CedraGenderSlide,
+    "cedra-orientation-slide": CedraOrientationSlide,
   },
   data: () => ({
     userName: "",

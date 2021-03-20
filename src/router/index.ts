@@ -3,6 +3,7 @@ import { RouteRecordRaw } from "vue-router";
 
 import MainLayout from "@/layouts/main.layout.vue";
 
+import Launch from "@/views/launch.vue";
 import Slider from "@/views/slider.vue";
 import Feed from "@/views/feed.vue";
 import Likes from "@/views/likes.vue";
@@ -16,6 +17,11 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "",
+        name: "launch",
+        component: Launch,
+      },
+      {
+        path: "feed",
         name: "feed",
         component: Feed,
       },

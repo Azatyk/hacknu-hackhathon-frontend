@@ -35,7 +35,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapMutations, mapGetters } from "vuex";
-import { IonSlides, IonSlide, loadingController } from "@ionic/vue";
+import {
+  IonSlides,
+  IonSlide,
+  loadingController,
+  toastController,
+} from "@ionic/vue";
 import aituBridge from "@btsd/aitu-bridge";
 import { createUserRequest } from "@/requests/users";
 import { fetchOptionsRequest } from "@/requests/options";
@@ -101,6 +106,7 @@ export default defineComponent({
       const user: CreateUserDto = this.user;
       createUserRequest(user)
         .then(() => this.$router.push({ name: "feed" }))
+        .catch(this.openErrorToast)
         .finally(() => loading.dismiss());
     },
     createLoading() {
@@ -109,11 +115,22 @@ export default defineComponent({
       });
     },
     loadOptions() {
-      fetchOptionsRequest().then((content) => {
-        const { genders, orientations } = content;
-        this.setGenders(genders);
-        this.setOrientations(orientations);
+      fetchOptionsRequest()
+        .then((content) => {
+          const { genders, orientations } = content;
+          this.setGenders(genders);
+          this.setOrientations(orientations);
+        })
+        .catch(this.openErrorToast);
+    },
+    async openErrorToast() {
+      const toast = await toastController.create({
+        message: "Ошибка при загрузке данных",
+        position: "top",
+        color: "danger",
+        duration: 1000,
       });
+      return toast.present();
     },
     ...mapMutations(["setGenders", "setOrientations"]),
   },

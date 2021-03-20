@@ -1,18 +1,12 @@
 <template>
-  <ion-slides
-    ref="slider"
-    class="slides"
-    pager="true"
-    :options="slideOpts"
-    :class="{ 'slider-open': isSliderOpen }"
-  >
+  <ion-slides ref="slider" class="slides" pager="true" :options="slideOpts">
     <ion-slide>
       <SlideContent
         :img="'/assets/slide1-image.svg'"
-        v-bind:title="`Привет, ${data?.name ?? ''}. Мы рады, что ты с нами`"
+        v-bind:title="`Привет, ${userName || 'друг'}. Мы рады, что ты с нами`"
         v-bind:description="'Cedra поможет найти твою вторую половинку. Давай покажу, что дальше'"
         v-bind:button-label="'Начать'"
-        v-on:next-click="next"
+        v-on:next-click="next()"
         v-on:close-slider="closeSlider()"
       ></SlideContent>
     </ion-slide>
@@ -22,27 +16,27 @@
         v-bind:title="'Добавь фотографию'"
         v-bind:description="'Нужна лишь одна фотография, ее будут видеть все остальные'"
         v-bind:button-label="'Дальше'"
-        v-on:next-click="next"
+        v-on:next-click="next()"
         v-on:close-slider="closeSlider()"
       ></SlideContent>
     </ion-slide>
     <ion-slide>
       <SlideContent
         v-bind:img="'/assets/slide3-image.svg'"
-        v-bind:title="'Ставьте лайки понравившимся людям'"
+        v-bind:title="'Ставь лайки понравившимся людям'"
         v-bind:description="'Ставьте лайки людям, которые вам по душе и ждите от них взаимности'"
         v-bind:button-label="'Дальше'"
-        v-on:next-click="next"
+        v-on:next-click="next()"
         v-on:close-slider="closeSlider()"
       ></SlideContent>
     </ion-slide>
     <ion-slide>
       <SlideContent
         v-bind:img="'/assets/slide4-image.svg'"
-        v-bind:title="'Создавайте пары и общайтесь'"
+        v-bind:title="'Создавай пары и общайся'"
         v-bind:description="'Получайте взаимные лайки и создавайте лимонные пары'"
         v-bind:button-label="'Понятно'"
-        :needButtonArrow="false"
+        :nextSlideLink="false"
         v-on:close-slider="closeSlider()"
       ></SlideContent>
     </ion-slide>
@@ -64,6 +58,16 @@ export default defineComponent({
 
   components: { SlideContent, IonSlides, IonSlide },
 
+  data() {
+    return {
+      userName: "",
+    };
+  },
+
+  async mounted() {
+    await this.getUser();
+  },
+
   methods: {
     next() {
       this.$el.slideNext();
@@ -72,15 +76,11 @@ export default defineComponent({
     closeSlider() {
       this.$emit("close-slider");
     },
-  },
 
-  async data() {
-    try {
-      const data = await aituBridge.getMe();
-      return { data };
-    } catch (e) {
-      console.log(e);
-    }
+    async getUser() {
+      const res = await aituBridge.getMe();
+      this.userName = res.name;
+    },
   },
 
   setup() {
@@ -95,18 +95,21 @@ export default defineComponent({
 
 <style scoped>
 .slides {
-  position: absolute;
-  top: 0;
-  left: 0;
   height: 100vh;
   width: 100%;
   z-index: 5;
-  transform: translateY(100vh);
-  transition: 400ms ease-in-out;
+}
+</style>
+
+<style>
+/* .fade-enter-active,
+.fade-leave-active {
+  transition: opacity 2s ease;
 }
 
-.slider-open {
-  transform: translateY(0);
-  transition: 400ms ease-in-out;
-}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+} */
 </style>

@@ -1,24 +1,24 @@
 <template>
   <div class="slide-content">
-    <i class="bx bx-x slide-close" @click="$emit('close-slider')"></i>
     <img :src="img" class="slide-image" />
     <div class="slide-text">
       <h1 class="slide-title">{{ title }}</h1>
       <p class="slide-description">{{ description }}</p>
     </div>
-    <div class="slide-button">
-      <next-link
-        @click="!needButtonArrow ? $emit('close-slider') : $emit('next-click')"
-      >
-        <div class="slide-link">
-          <span class="slide-link-label">{{ buttonLabel }}</span
-          ><i
-            v-if="needButtonArrow"
-            class="bx bx-right-arrow-alt slide-link-icon"
-          ></i>
-        </div>
-      </next-link>
+    <div class="slide-link" v-if="nextSlideLink" @click="$emit('next-click')">
+      <span class="slide-link-label">{{ buttonLabel }}</span
+      ><i
+        v-if="nextSlideLink"
+        class="bx bx-right-arrow-alt slide-link-icon"
+      ></i>
     </div>
+    <router-link v-else to="/" class="slide-link">
+      <span class="slide-link-label">{{ buttonLabel }}</span
+      ><i
+        v-if="nextSlideLink"
+        class="bx bx-right-arrow-alt slide-link-icon"
+      ></i>
+    </router-link>
   </div>
 </template>
 
@@ -31,7 +31,7 @@ export default {
     onClick: Function,
     img: String,
     buttonLabel: String,
-    needButtonArrow: {
+    nextSlideLink: {
       type: Boolean,
       default: true,
     },
@@ -100,6 +100,7 @@ export default {
   justify-content: center;
   align-items: center;
   color: #6c5ce7;
+  text-decoration: none;
 }
 
 .slide-link-label {

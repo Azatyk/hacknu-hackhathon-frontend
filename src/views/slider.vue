@@ -54,11 +54,11 @@ export default defineComponent({
   },
   data: () => ({
     user: {
-      phoneNumber: "+77071498484",
-      firstName: "Sayazhan",
-      lastName: "Onglassyn",
-      birthday: "27-02-2003",
-      description: "Hello, world!",
+      phoneNumber: "",
+      firstName: "",
+      lastName: "",
+      birthday: "",
+      description: "",
       avatar: "",
       avatarPreview: "",
       genderId: 0,

@@ -45,7 +45,9 @@ export default defineComponent({
 }
 
 .welcome-slide__content {
+  width: 90%;
   height: 70vh;
+  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -58,11 +60,11 @@ export default defineComponent({
 
 .welcome-slide__heading {
   margin: 0;
-  text-align: left;
+  text-align: center;
 }
 
 .welcome-slide__paragraph {
-  text-align: left;
+  text-align: center;
   color: rgba(0, 0, 0, 0.7);
   font-size: 16px;
   line-height: 1.4;

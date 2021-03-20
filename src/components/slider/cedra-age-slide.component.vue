@@ -48,7 +48,9 @@ export default defineComponent({
 }
 
 .age-slide__content {
+  width: 90%;
   height: 70vh;
+  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -61,7 +63,7 @@ export default defineComponent({
 
 .age-slide__heading {
   margin: 0;
-  text-align: left;
+  text-align: center;
 }
 
 .age-slide__date-picker {
@@ -74,7 +76,7 @@ export default defineComponent({
 
 .age-slide__paragraph {
   margin: 0;
-  text-align: left;
+  text-align: center;
   color: rgba(0, 0, 0, 0.7);
   font-size: 16px;
   line-height: 1.4;

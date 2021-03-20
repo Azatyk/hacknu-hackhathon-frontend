@@ -4,6 +4,9 @@
       <cedra-welcome-slide @next="next" />
     </ion-slide>
     <ion-slide>
+      <cedra-age-slide @next="next" />
+    </ion-slide>
+    <ion-slide>
       <SlideContent
         :img="'/assets/slide1-image.svg'"
         v-bind:title="`Привет, ${userName || 'друг'}. Мы рады, что ты с нами`"
@@ -69,6 +72,7 @@ import { defineComponent } from "vue";
 import aituBridge from "@btsd/aitu-bridge";
 import SlideContent from "@/components/slider/cedra-slide-content.component.vue";
 import CedraWelcomeSlide from "@/components/slider/cedra-welcome-slide.component.vue";
+import CedraAgeSlide from "@/components/slider/cedra-age-slide.component.vue";
 import choice from "@/components/slider/cedra-choice.component.vue";
 
 export default defineComponent({
@@ -82,6 +86,7 @@ export default defineComponent({
     IonSlide,
     choice,
     "cedra-welcome-slide": CedraWelcomeSlide,
+    "cedra-age-slide": CedraAgeSlide,
   },
   data() {
     return {

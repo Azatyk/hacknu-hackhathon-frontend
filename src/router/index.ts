@@ -34,11 +34,12 @@ const routes: Array<RouteRecordRaw> = [
         name: "profile",
         component: Profile,
       },
+      {
+        path: "/slider",
+        name: "slider",
+        component: Slider,
+      },
     ],
-  },
-  {
-    path: "/slider",
-    component: Slider,
   },
 ];
 

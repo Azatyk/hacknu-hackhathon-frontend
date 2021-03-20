@@ -11,3 +11,9 @@ import { defineComponent } from "vue";
 
 export default defineComponent({});
 </script>
+
+<style>
+.content {
+  z-index: 2;
+}
+</style>

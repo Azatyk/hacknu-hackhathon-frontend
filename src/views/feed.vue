@@ -11,7 +11,7 @@ import CedraNav from "@/components/common/cedra-nav.component.vue";
 
 export default defineComponent({
   components: {
-    "cedra-nav": CedraNav,
+    CedraNav,
   },
 });
 </script>

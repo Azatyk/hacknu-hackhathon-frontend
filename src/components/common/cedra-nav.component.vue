@@ -1,26 +1,34 @@
 <template>
   <nav class="nav">
     <router-link :to="{ name: 'feed' }" exact class="nav__link">
-      <i class="bx bxs-dice-5"></i>
+      <i class="bx bxs-dice-5 nav__link-icon"></i>
     </router-link>
     <router-link :to="{ name: 'likes' }" class="nav__link">
-      <i class="bx bxs-category"></i>
+      <i class="bx bxs-heart nav__link-icon"></i>
     </router-link>
     <router-link :to="{ name: 'questions' }" class="nav__link">
-      <i class="bx bxs-message-rounded"></i>
+      <i class="bx bxs-message-detail nav__link-icon"></i>
     </router-link>
     <router-link :to="{ name: 'profile' }" class="nav__link">
-      <i class="bx bxs-user"></i>
+      <i class="bx bxs-user nav__link-icon"></i>
     </router-link>
   </nav>
 </template>
 
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({});
+</script>
+
+
 <style scoped>
 .nav {
-  padding: 20px 40px;
+  padding: 30px 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 2;
 }
 
 .nav__link {
@@ -29,6 +37,10 @@
 }
 
 .nav__link.router-link-active {
-  color: #f48b29;
+  color: #6c5ce7;
+}
+
+.nav__link-icon {
+  font-size: 30px;
 }
 </style>

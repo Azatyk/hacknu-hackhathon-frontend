@@ -20,7 +20,5 @@ export default defineComponent({
 <style>
 .content {
   min-height: 100vh;
-  background-color: #f9f6fb;
-  z-index: 2;
 }
 </style>

@@ -53,6 +53,7 @@ export default defineComponent({
 
 .welcome-slide__image {
   width: 80%;
+  margin: 0 auto;
 }
 
 .welcome-slide__heading {

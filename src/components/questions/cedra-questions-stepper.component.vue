@@ -28,57 +28,12 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { IonSlides, IonSlide } from "@ionic/vue";
+import Questions from "@/../public/assets/questions.ts";
 
 export default defineComponent({
   components: { IonSlides, IonSlide },
   data: () => ({
-    questions: [
-      {
-        id: 1,
-        question:
-          "Если бы ты мог пригласить любого человека на ужин, кто бы это был?"
-      },
-      {
-        id: 2,
-        question:
-          "Хотел бы ты стать знаменитым? Чем именно?"
-      },
-      {
-        id: 3,
-        question:
-          "Прежде чем позвонить, ты репетируешь то, что собираешься сказать? Почему?"
-      },
-      {
-        id: 4,
-        question:
-          "Опиши свой идеальный день?"
-      },
-      {
-        id: 5,
-        question:
-          "Когда ты в последний раз пел на едине? Перед кем то?"
-      },
-      {
-        id: 6,
-        question:
-          "Если бы ты мог дожить до 90 лет и сохранить ум либо тело 30-летнего человека в течение последних 60 лет своей жизни, что бы ты выбрал?"
-      },
-      {
-        id: 7,
-        question:
-          "Назовите три вещи, которые у вас и вашего партнера, есть общего."
-      },
-      {
-        id: 8,
-        question:
-          "За что в своей жизни ты чувствуешь наибольшую благодарность?"
-      },
-      {
-        id: 9,
-        question:
-          "За что в своей жизни ты чувствуешь наибольшую благодарность?"
-      }
-    ]
+    questions: Questions
   }),
   methods: {
     finishQuestions() {
@@ -144,7 +99,7 @@ export default defineComponent({
 }
 
 .card {
-  margin: 20vh auto 20vh auto;
+  margin: 20vh auto 0 auto;
   width: 90vw;
   display: flex;
   align-items: center;

@@ -1,24 +1,43 @@
 <template>
   <div class="stepper">
     <ion-progress-bar :value="progressBarValue"></ion-progress-bar>
-    <ion-slides ref="mySlides" :options="slideOpts" @ionSlideDidChange="slideChanged">
+    <ion-slides
+      ref="mySlides"
+      :options="slideOpts"
+      @ionSlideDidChange="slideChanged"
+    >
       <ion-slide :key="question.id" v-for="question in questions">
-        <div  class="stepper__card card">
+        <div class="stepper__card card">
           <div class="card__question">{{ question.question }}</div>
         </div>
       </ion-slide>
     </ion-slides>
     <div class="stepper__buttons">
-      <button @click="prevSlide()" :disabled="disablePrevBtn" :class="{stepper__button_disabled: disablePrevBtn}" class="stepper__button">
-      <i class="bx bx-left-arrow-alt"></i>
+      <button
+        @click="prevSlide"
+        :disabled="disablePrevBtn"
+        :class="{ stepper__button_disabled: disablePrevBtn }"
+        class="stepper__button"
+      >
+        <i class="bx bx-left-arrow-alt"></i>
         Назад
       </button>
-      <button v-if="disableNextBtn" @click="finishQuestions()" class="stepper__button">
+      <button
+        v-if="disableNextBtn"
+        @click="finishQuestions"
+        class="stepper__button"
+      >
         Закончить
       </button>
-      <button v-else @click="nextSlide()" :disabled="disableNextBtn"  :class="{stepper__button_disabled: disableNextBtn}" class="stepper__button">
+      <button
+        v-else
+        @click="nextSlide"
+        :disabled="disableNextBtn"
+        :class="{ stepper__button_disabled: disableNextBtn }"
+        class="stepper__button"
+      >
         Далее
-      <i class="bx bx-right-arrow-alt"></i>
+        <i class="bx bx-right-arrow-alt"></i>
       </button>
     </div>
   </div>
@@ -27,18 +46,18 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { IonSlides, IonSlide } from "@ionic/vue";
-import Questions from "@/../public/assets/questions.ts";
+import { IonSlides, IonSlide, IonProgressBar } from "@ionic/vue";
+import Questions from "@/data/questions";
 
 export default defineComponent({
-  components: { IonSlides, IonSlide },
+  components: { IonSlides, IonSlide, IonProgressBar },
   data: () => ({
-    questions: Questions
+    questions: Questions,
   }),
   methods: {
     finishQuestions() {
-      this.$emit('finish')
-    }
+      this.$emit("finish");
+    },
   },
   setup() {
     const mySlides = ref<any>(null);
@@ -48,18 +67,18 @@ export default defineComponent({
 
     const slideOpts = {
       initialSlide: 0,
-      speed: 400
+      speed: 400,
     };
 
     const nextSlide = async () => {
       const slider = await mySlides?.value?.$el.getSwiper();
       await slider.slideNext();
-    }
+    };
 
     const prevSlide = async () => {
       const slider = await mySlides?.value?.$el.getSwiper();
       await slider.slidePrev();
-    }
+    };
 
     const slideChanged = async () => {
       const slider = await mySlides?.value?.$el.getSwiper();
@@ -68,11 +87,20 @@ export default defineComponent({
 
       disablePrevBtn.value = activeSlide === 0;
       disableNextBtn.value = activeSlide === slideLength - 1;
-      progressBarValue.value = (activeSlide+1)/slideLength
-    }
+      progressBarValue.value = (activeSlide + 1) / slideLength;
+    };
 
-    return { slideOpts, mySlides, prevSlide, nextSlide, disablePrevBtn, disableNextBtn, slideChanged, progressBarValue };
-  }
+    return {
+      slideOpts,
+      mySlides,
+      prevSlide,
+      nextSlide,
+      disablePrevBtn,
+      disableNextBtn,
+      slideChanged,
+      progressBarValue,
+    };
+  },
 });
 </script>
 
@@ -90,7 +118,7 @@ export default defineComponent({
 
 .stepper__button {
   background: white;
-  color: #6C5CE7;
+  color: #6c5ce7;
   font-size: 20px;
 }
 

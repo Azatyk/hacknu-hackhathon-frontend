@@ -29,7 +29,6 @@ export default defineComponent({
   background-color: grey;
   background-size: cover;
   background-position: center;
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 

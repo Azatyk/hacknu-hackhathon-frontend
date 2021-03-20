@@ -23,7 +23,6 @@ export default defineComponent({
 .feed-card {
   position: relative;
   margin: auto;
-  margin-top: 10px;
   width: 94%;
   height: 70vh;
   border-radius: 10px;

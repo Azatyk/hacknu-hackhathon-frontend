@@ -4,10 +4,16 @@
       <cedra-welcome-slide @next="navigateToNextSlide" />
     </ion-slide>
     <ion-slide>
-      <cedra-age-slide @next="navigateToNextSlide" />
+      <cedra-age-slide
+        @birthday-change="handleBirthdayChange"
+        @next="navigateToNextSlide"
+      />
     </ion-slide>
     <ion-slide>
-      <cedra-gender-slide @next="navigateToNextSlide" />
+      <cedra-gender-slide
+        @gender-change="handleGenderChange"
+        @next="navigateToNextSlide"
+      />
     </ion-slide>
     <ion-slide>
       <cedra-orientation-slide @next="navigateToNextSlide" />
@@ -58,6 +64,18 @@ export default defineComponent({
     async loadUser() {
       const res = await aituBridge.getMe();
       this.user.firstName = res.name;
+      this.user.lastName = res.lastname;
+    },
+    async loadPhoneNumber() {
+      const res = await aituBridge.getPhone();
+      this.user.phoneNumber = res.phone;
+    },
+    handleBirthdayChange(birthday: string) {
+      this.user.birthday = birthday;
+    },
+    handleGenderChange(genderId: number) {
+      this.user.genderId = genderId;
+      console.log(this.user.genderId);
     },
   },
   setup() {
@@ -69,6 +87,7 @@ export default defineComponent({
   },
   mounted() {
     this.loadUser();
+    this.loadPhoneNumber();
   },
 });
 </script>

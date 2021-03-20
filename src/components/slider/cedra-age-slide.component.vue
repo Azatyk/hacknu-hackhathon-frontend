@@ -8,18 +8,21 @@
       />
       <h1 class="age-slide__heading">Для начала укажи свой возраст</h1>
       <ion-datetime
+        v-model="birthday"
         display-format="DD/MM/YYYY"
         placeholder="Выбери дату"
         class="age-slide__date-picker"
+        @ion-change="handleDatePickerChange"
       />
       <p class="age-slide__paragraph">
         Для того, чтобы пользоваться Цедрой ты должен быть старше 18 лет
       </p>
     </div>
     <ion-button
-      @click="$emit('next')"
+      :disabled="!birthday"
       expand="block"
       class="age-slide__bottom-button"
+      @click="$emit('next')"
       >Дальше</ion-button
     >
   </div>
@@ -33,6 +36,15 @@ export default defineComponent({
   components: {
     IonDatetime,
     IonButton,
+  },
+  data: () => ({
+    birthday: "",
+  }),
+  methods: {
+    handleDatePickerChange(event) {
+      const { value } = event.target;
+      this.$emit("birthday-change", value);
+    },
   },
 });
 </script>

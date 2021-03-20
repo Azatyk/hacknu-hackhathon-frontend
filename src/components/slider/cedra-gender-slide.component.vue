@@ -7,7 +7,11 @@
         class="gender-slide__image"
       />
       <h1 class="gender-slide__heading">Какой у тебя пол?</h1>
-      <ion-radio-group v-model="genderId" class="gender-slide__radio">
+      <ion-radio-group
+        v-model="genderId"
+        @ion-change="handleRadioChange"
+        class="gender-slide__radio"
+      >
         <ion-item v-for="gender in genders" :key="gender.id">
           <ion-label>{{ gender.single }}</ion-label>
           <ion-radio :value="gender.id"></ion-radio>
@@ -15,9 +19,10 @@
       </ion-radio-group>
     </div>
     <ion-button
-      @click="$emit('next')"
+      :disabled="!genderId"
       expand="block"
       class="gender-slide__bottom-button"
+      @click="$emit('next')"
       >Дальше</ion-button
     >
   </div>
@@ -44,8 +49,14 @@ export default defineComponent({
   },
   data: () => ({
     genders,
-    genderId: null,
+    genderId: 0,
   }),
+  methods: {
+    handleRadioChange(event) {
+      const { value } = event.target;
+      this.$emit("gender-change", value);
+    },
+  },
 });
 </script>
 

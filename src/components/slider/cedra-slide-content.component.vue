@@ -1,9 +1,10 @@
 <template>
   <div class="slide-content">
-    <img :src="img" class="slide-image" />
+    <img v-if="img" :src="img" class="slide-image" />
     <div class="slide-text">
       <h1 class="slide-title">{{ title }}</h1>
       <p class="slide-description">{{ description }}</p>
+      <slot></slot>
     </div>
     <div class="slide-link" v-if="nextSlideLink" @click="$emit('next-click')">
       <span class="slide-link-label">{{ buttonLabel }}</span

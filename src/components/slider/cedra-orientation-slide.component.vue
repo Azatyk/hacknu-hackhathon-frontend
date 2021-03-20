@@ -1,27 +1,27 @@
 <template>
-  <div class="gender-slide">
-    <div class="gender-slide__content">
+  <div class="orientation-slide">
+    <div class="orientation-slide__content">
       <img
-        src="/assets/images/pair.svg"
+        src="/assets/images/window-sitting.svg"
         alt="Illustration"
-        class="gender-slide__image"
+        class="orientation-slide__image"
       />
-      <h1 class="gender-slide__heading">Какой у тебя пол?</h1>
+      <h1 class="orientation-slide__heading">Какая у тебя ориентация?</h1>
       <ion-radio-group
-        v-model="genderId"
+        v-model="orientationId"
+        class="orientation-slide__radio"
         @ion-change="handleRadioChange"
-        class="gender-slide__radio"
       >
-        <ion-item v-for="gender in genders" :key="gender.id">
-          <ion-label>{{ gender.single }}</ion-label>
-          <ion-radio :value="gender.id"></ion-radio>
+        <ion-item v-for="orientation in orientations" :key="orientation.id">
+          <ion-label>{{ orientation.name }}</ion-label>
+          <ion-radio :value="orientation.id"></ion-radio>
         </ion-item>
       </ion-radio-group>
     </div>
     <ion-button
-      :disabled="!genderId"
+      :disabled="!orientationId"
       expand="block"
-      class="gender-slide__bottom-button"
+      class="orientation-slide__bottom-button"
       @click="$emit('next')"
       >Дальше</ion-button
     >
@@ -37,7 +37,7 @@ import {
   IonRadio,
   IonRadioGroup,
 } from "@ionic/vue";
-import genders from "@/data/genders";
+import orientations from "@/data/orientations";
 
 export default defineComponent({
   components: {
@@ -48,20 +48,20 @@ export default defineComponent({
     IonRadioGroup,
   },
   data: () => ({
-    genders,
-    genderId: 0,
+    orientations,
+    orientationId: 0,
   }),
   methods: {
     handleRadioChange(event) {
       const { value } = event.target;
-      this.$emit("gender-change", value);
+      this.$emit("orientation-change", value);
     },
   },
 });
 </script>
 
 <style scoped>
-.gender-slide {
+.orientation-slide {
   width: 100%;
   height: 100vh;
   padding: 20px;
@@ -70,7 +70,7 @@ export default defineComponent({
   justify-content: space-between;
 }
 
-.gender-slide__content {
+.orientation-slide__content {
   width: 90%;
   height: 70vh;
   margin: auto;
@@ -79,21 +79,21 @@ export default defineComponent({
   justify-content: center;
 }
 
-.gender-slide__image {
+.orientation-slide__image {
   width: 80%;
   margin: 0 auto 30px;
 }
 
-.gender-slide__heading {
+.orientation-slide__heading {
   margin: 0;
   text-align: center;
 }
 
-.gender-slide__radio {
+.orientation-slide__radio {
   margin: 30px 0;
 }
 
-.gender-slide__paragraph {
+.orientation-slide__paragraph {
   margin: 0;
   text-align: center;
   color: rgba(0, 0, 0, 0.7);

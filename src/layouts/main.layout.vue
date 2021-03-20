@@ -8,8 +8,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { IonPage } from "@ionic/vue";
 
-export default defineComponent({});
+export default defineComponent({
+  components: {
+    IonPage,
+  },
+});
 </script>
 
 <style>

@@ -1,6 +1,6 @@
 <template>
 <div class="profile-image">
-    <img src="#" alt="" class="profile-image__img">
+    <img :src="imgUrl" alt="" class="profile-image__img">
 </div>
 </template>
 
@@ -8,7 +8,9 @@
 import {defineComponent} from 'vue';
 
 export default defineComponent({
-
+  props: {
+    imgUrl: String,
+  }
 })
 </script>
 

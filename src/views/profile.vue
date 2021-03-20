@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <cedra-nav />
-    <cedra-profile-img />
+    <cedra-profile-img :img-url="'#'" />
     <h2 class="profile__name">
       Онласын Саяжанна, 14
     </h2>

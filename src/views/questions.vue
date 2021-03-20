@@ -1,7 +1,7 @@
 <template>
   <div>
     <cedra-nav />
-    <div v-if="!stepperVisible" class="questions">
+    <div v-if="!stepperVisible && !outroVisible" class="questions">
       <div class="questions__intro">
         <img src="/assets/loving-doodle.svg" alt="" class="questions__image">
       </div>
@@ -12,7 +12,14 @@
         <i class='bx bx-right-arrow-alt'></i>
       </button>
     </div>
-    <cedra-questions-stepper v-else />
+    <cedra-questions-stepper @finish="handleFinish" v-else-if="stepperVisible" />
+    <div v-if="outroVisible" class="questions">
+      <div class="questions__intro">
+        <img src="/assets/loving-doodle.svg" alt="" class="questions__image">
+      </div>
+      <h2 class="questions__heading">Поздравляю, вы ответили на все <br/> <span class="questions__heading_color" >вопросы</span>!</h2>
+      <p class="questions__desc">Чтобы укрепить свою любовь, вы должны смотреть в глаза своему партнеру в течение четырех минут. В тишине. Это трудно, но вы узнаете многое друг о друге</p>
+    </div>
   </div>
 </template>
 
@@ -27,11 +34,16 @@ export default defineComponent({
     "cedra-questions-stepper": CedraQuestionsStepper,
   },
   data: () => ({
-    stepperVisible: false
+    stepperVisible: false,
+    outroVisible: false,
   }),
   methods: {
     showStepper() {
       this.stepperVisible = true;
+    },
+    handleFinish() {
+      this.outroVisible = true;
+      this.stepperVisible = false;
     }
   }
 });
@@ -54,7 +66,7 @@ export default defineComponent({
 }
 
 .questions__heading_color {
-  color: #ff8430;
+  color: #6C5CE7;
 }
 
 .questions__desc {
@@ -69,7 +81,7 @@ export default defineComponent({
   height: 39px;
   font-size: 16px;
   width: 90%;
-  background: #ff8430;
+  background: #6C5CE7;
   margin: 20px auto 0 auto;
 }
 </style>

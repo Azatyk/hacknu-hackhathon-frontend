@@ -1,163 +1,54 @@
 <template>
-  <ion-slides ref="slider" class="slider" :options="slideOpts">
+  <ion-slides class="slider" :options="sliderOptions">
     <ion-slide>
-      <cedra-welcome-slide @next="next" />
+      <cedra-welcome-slide @next="navigateToNextSlide" />
     </ion-slide>
     <ion-slide>
-      <cedra-age-slide @next="next" />
+      <cedra-age-slide @next="navigateToNextSlide" />
     </ion-slide>
     <ion-slide>
-      <SlideContent
-        :img="'/assets/slide1-image.svg'"
-        v-bind:title="`Привет, ${userName || 'друг'}. Мы рады, что ты с нами`"
-        v-bind:description="'Мы в Цедре хотим помочь тебе тебе найти человека с которым можно выпить стакан лимонада'"
-        v-bind:button-label="'Начать'"
-        v-on:next-click="next()"
-        v-on:close-slider="closeSlider()"
-      ></SlideContent>
-    </ion-slide>
-    <ion-slide>
-      <SlideContent
-        v-bind:button-label="'Дальше'"
-        v-on:next-click="next()"
-        v-on:close-slider="closeSlider()"
-      >
-        <div class="choices">
-          <h1 class="choices-title">Расскажи о себе</h1>
-          <choice
-            question="Какой твой пол?"
-            :variants="genderArray"
-            @radio-change="handleGendersChoice"
-          />
-          <choice
-            question="Твои предпочтения"
-            :variants="preferencesArray"
-            @checkbox-change="handlePreferencesChoice"
-            type="checkbox"
-          />
-          <choice
-            question="Какая у тебя ориентация?"
-            :variants="orientationArray"
-            @radio-change="handleGendersChoice"
-          />
-        </div>
-      </SlideContent>
-    </ion-slide>
-    <ion-slide>
-      <SlideContent
-        v-bind:img="'/assets/slide3-image.svg'"
-        v-bind:title="'Ставь лайки понравившимся людям'"
-        v-bind:description="'Ставьте лайки людям, которые вам по душе и ждите от них взаимности'"
-        v-bind:button-label="'Дальше'"
-        v-on:next-click="next()"
-        v-on:close-slider="closeSlider()"
-      ></SlideContent>
-    </ion-slide>
-    <ion-slide>
-      <SlideContent
-        v-bind:img="'/assets/slide4-image.svg'"
-        v-bind:title="'Создавай пары и общайся'"
-        v-bind:description="'Получайте взаимные лайки и создавайте лимонные пары'"
-        v-bind:button-label="'Понятно'"
-        :nextSlideLink="false"
-        v-on:close-slider="closeSlider()"
-      ></SlideContent>
+      <cedra-gender-slide @next="navigateToNextSlide" />
     </ion-slide>
   </ion-slides>
 </template>
 
 <script lang="ts">
-import { IonSlides, IonSlide } from "@ionic/vue";
 import { defineComponent } from "vue";
+import { IonSlides, IonSlide } from "@ionic/vue";
 import aituBridge from "@btsd/aitu-bridge";
-import SlideContent from "@/components/slider/cedra-slide-content.component.vue";
 import CedraWelcomeSlide from "@/components/slider/cedra-welcome-slide.component.vue";
 import CedraAgeSlide from "@/components/slider/cedra-age-slide.component.vue";
-import choice from "@/components/slider/cedra-choice.component.vue";
+import CedraGenderSlide from "@/components/slider/cedra-gender-slide.component.vue";
 
 export default defineComponent({
-  name: "Slider",
-  props: {
-    isSliderOpen: Boolean,
-  },
   components: {
-    SlideContent,
     IonSlides,
     IonSlide,
-    choice,
     "cedra-welcome-slide": CedraWelcomeSlide,
     "cedra-age-slide": CedraAgeSlide,
+    "cedra-gender-slide": CedraGenderSlide,
   },
-  data() {
-    return {
-      userName: "",
-      genderArray: [
-        {
-          name: "Мужской",
-        },
-        {
-          name: "Женский",
-        },
-        {
-          name: "Не определился",
-        },
-      ],
-      preferencesArray: [
-        {
-          name: "Мужчины",
-        },
-        {
-          name: "Женщины",
-        },
-        {
-          name: "Другое",
-        },
-      ],
-      orientationArray: [
-        {
-          name: "Гетеросекусал",
-        },
-        {
-          name: "Гомосексуал",
-        },
-        {
-          name: "Бисексуал",
-        },
-        {
-          name: "Не определился",
-        },
-      ],
-    };
-  },
-  async mounted() {
-    await this.getUser();
-  },
+  data: () => ({
+    userName: "",
+  }),
   methods: {
-    next() {
+    navigateToNextSlide() {
       this.$el.slideNext();
     },
-    closeSlider() {
-      this.$emit("close-slider");
-    },
-    async getUser() {
+    async loadUser() {
       const res = await aituBridge.getMe();
       this.userName = res.name;
     },
-    handleGendersChoice(event: any) {
-      console.log(event);
-    },
-    handlePreferencesChoice(event: any) {
-      event.forEach((element: any) => {
-        console.log(element);
-      });
-    },
   },
   setup() {
-    const slideOpts = {
+    const sliderOptions = {
       initialSlide: 0,
       speed: 400,
     };
-    return { slideOpts };
+    return { sliderOptions };
+  },
+  mounted() {
+    this.loadUser();
   },
 });
 </script>

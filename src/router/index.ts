@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     component: MainLayout,
     children: [
       {
-        path: "",
+        path: "/feed",
         name: "feed",
         component: Feed,
       },

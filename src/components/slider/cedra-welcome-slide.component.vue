@@ -2,7 +2,7 @@
   <div class="welcome-slide">
     <div class="welcome-slide__content">
       <img
-        src="/assets/slide1-image.svg"
+        src="/assets/images/man-on-moon.svg"
         alt="Doodle Image"
         class="welcome-slide__image"
       />
@@ -52,11 +52,12 @@ export default defineComponent({
 }
 
 .welcome-slide__image {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
 }
 
 .welcome-slide__heading {
+  margin: 0;
   text-align: left;
 }
 

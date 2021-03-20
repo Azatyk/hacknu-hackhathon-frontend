@@ -1,18 +1,22 @@
 <template>
   <div class="stepper">
-    <button class="stepper__left-button">
-      <i class="bx bx-left-arrow-alt"></i>
-    </button>
-    <ion-slides ref="stepper" pager="true" :options="slideOpts">
+    <ion-slides @ionSlideDidChange="('changed')" ref="stepper" :options="slideOpts">
       <ion-slide :key="question.id" v-for="question in questions">
         <div  class="stepper__card card">
           <div class="card__question">{{ question.question }}</div>
         </div>
       </ion-slide>
     </ion-slides>
-    <button class="stepper__right-button">
+    <div class="stepper__buttons">
+      <button class="stepper__button">
+      <i class="bx bx-left-arrow-alt"></i>
+        Назад
+      </button>
+      <button @click="next()" class="stepper__button">
+        Далее
       <i class="bx bx-right-arrow-alt"></i>
-    </button>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -25,6 +29,7 @@ export default defineComponent({
   components: { IonSlides, IonSlide },
   data: () => ({
     showStepper: false,
+    activeStep: null,
     questions: [
       {
         id: 1,
@@ -71,6 +76,10 @@ export default defineComponent({
   methods: {
     next() {
       this.$el.slideNext();
+    },
+    ionSlideDidChange() {
+      console.log('changed')
+      this.activeStep = this.$el.getActiveIndex()
     }
   },
   setup() {
@@ -89,36 +98,25 @@ export default defineComponent({
   position: relative;
 }
 
-.stepper__right-button {
-  text-align: right;
-  color: #f48b29;
-  font-size: 25px;
-  height: 120px;
-  width: 60px;
-  background: #f48b2969;
-  border-top-left-radius: 60px;
-  border-bottom-left-radius: 60px;
+.stepper__buttons {
   position: absolute;
+  bottom: 20%;
   right: 0;
-  bottom: 30%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .card {
-  width: 100vw;
-  height: 100vh;
+  margin: auto;
+  width: 90vw;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.stepper__left-button {
-  text-align: left;
-  color: #f48b29;
-  font-size: 25px;
-  height: 120px;
-  width: 60px;
-  background: #f48b2969;
-  border-top-right-radius: 60px;
-  border-bottom-right-radius: 60px;
-  position: absolute;
-  left: 0;
-  bottom: 30%;
+.card__question {
+  font-size: 35px;
 }
 </style>

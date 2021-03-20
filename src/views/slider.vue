@@ -21,21 +21,26 @@
         @next="navigateToNextSlide"
       />
     </ion-slide>
-    <!-- <ion-slide>
-      <cedra-description-slide @next="navigateToNextSlide" />
-    </ion-slide> -->
+    <ion-slide>
+      <cedra-description-slide
+        @description-change="handleDescriptionChange"
+        @next="createAndEnterUser"
+      />
+    </ion-slide>
   </ion-slides>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { IonSlides, IonSlide } from "@ionic/vue";
+import { IonSlides, IonSlide, loadingController } from "@ionic/vue";
 import aituBridge from "@btsd/aitu-bridge";
+import { createUserRequest } from "@/requests/users";
+import { CreateUserDto } from "@/dto/create-user.dto";
 import CedraWelcomeSlide from "@/components/slider/cedra-welcome-slide.component.vue";
 import CedraAgeSlide from "@/components/slider/cedra-age-slide.component.vue";
 import CedraGenderSlide from "@/components/slider/cedra-gender-slide.component.vue";
 import CedraOrientationSlide from "@/components/slider/cedra-orientation-slide.component.vue";
-// import CedraDescriptionSlide from "@/components/slider/cedra-description-slide.component.vue";
+import CedraDescriptionSlide from "@/components/slider/cedra-description-slide.component.vue";
 
 export default defineComponent({
   components: {
@@ -45,15 +50,15 @@ export default defineComponent({
     "cedra-age-slide": CedraAgeSlide,
     "cedra-gender-slide": CedraGenderSlide,
     "cedra-orientation-slide": CedraOrientationSlide,
-    // "cedra-description-slide": CedraDescriptionSlide,
+    "cedra-description-slide": CedraDescriptionSlide,
   },
   data: () => ({
     user: {
-      phoneNumber: "",
-      firstName: "",
-      lastName: "",
-      birthday: "",
-      description: "",
+      phoneNumber: "+77071498484",
+      firstName: "Sayazhan",
+      lastName: "Onglassyn",
+      birthday: "27-02-2003",
+      description: "Hello, world!",
       avatar: "",
       avatarPreview: "",
       genderId: 0,
@@ -82,6 +87,24 @@ export default defineComponent({
     handleOrientationChange(orientationId: number) {
       this.user.orientationId = orientationId;
     },
+    handleDescriptionChange(description: string) {
+      this.user.description = description;
+    },
+    async createAndEnterUser() {
+      const loading = await this.createLoading();
+      await loading.present();
+      const user: CreateUserDto = this.user;
+      createUserRequest(user)
+        .then(() => {
+          this.$router.push({ name: "feed" });
+        })
+        .finally(() => loading.dismiss());
+    },
+    createLoading() {
+      return loadingController.create({
+        message: "Почти закончили...",
+      });
+    },
   },
   setup() {
     const sliderOptions = {
@@ -91,8 +114,10 @@ export default defineComponent({
     return { sliderOptions };
   },
   mounted() {
-    this.loadUser();
-    this.loadPhoneNumber();
+    if (aituBridge.isSupported()) {
+      this.loadUser();
+      this.loadPhoneNumber();
+    }
   },
 });
 </script>

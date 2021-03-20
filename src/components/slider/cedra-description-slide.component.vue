@@ -12,16 +12,18 @@
         какую музыку ты слушаешь
       </p>
       <ion-textarea
-        placeholder="У меня когда-то был хомячок"
-        autofocus
+        v-model="description"
         :maxlength="255"
+        placeholder="У меня когда-то был хомячок"
         class="description-slide__textarea"
+        @ion-change="handleTextChange"
       />
     </div>
     <ion-button
-      @click="$emit('next')"
+      :disabled="!description"
       expand="block"
       class="description-slide__bottom-button"
+      @click="$emit('next')"
       >Дальше</ion-button
     >
   </div>
@@ -35,6 +37,15 @@ export default defineComponent({
   components: {
     IonButton,
     IonTextarea,
+  },
+  data: () => ({
+    description: "",
+  }),
+  methods: {
+    handleTextChange(event) {
+      const { value } = event.target;
+      this.$emit("description-change", value);
+    },
   },
 });
 </script>

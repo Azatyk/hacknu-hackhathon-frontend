@@ -11,7 +11,7 @@
         display-format="DD/MM/YYYY"
         placeholder="Выбери дату"
         class="age-slide__date-picker"
-      ></ion-datetime>
+      />
       <p class="age-slide__paragraph">
         Для того, чтобы пользоваться Цедрой ты должен быть старше 18 лет
       </p>
@@ -69,8 +69,8 @@ export default defineComponent({
 .age-slide__date-picker {
   margin: 30px 0;
   padding: 12px 0;
-  color: white;
-  background-color: #fa5159;
+  color: #fa5159;
+  border: 1px #fa5159 dashed;
   border-radius: 10px;
 }
 

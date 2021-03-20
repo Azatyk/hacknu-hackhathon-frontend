@@ -77,7 +77,12 @@ export default defineComponent({
   computed: mapGetters(["genders", "orientations"]),
   methods: {
     navigateToNextSlide() {
+      this.lockSlider(false);
       this.$el.slideNext();
+      this.lockSlider(true);
+    },
+    lockSlider(lock: boolean) {
+      this.$el.lockSwipes(lock);
     },
     async loadUser() {
       const res = await aituBridge.getMe();
@@ -147,6 +152,9 @@ export default defineComponent({
       this.loadPhoneNumber();
     }
     this.loadOptions();
+  },
+  mounted() {
+    this.lockSlider(true);
   },
 });
 </script>

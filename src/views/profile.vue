@@ -1,27 +1,29 @@
 <template>
   <div class="profile">
     <cedra-nav />
-    <cedra-profile-img :img-url="'#'" />
-    <h2 class="profile__name">
-      Онласын Саяжанна, 14
-    </h2>
-    <p class="profile__desc">
-      Независимая женщина — это женщина, которая не нашла никого, кто хотел бы зависеть от нее. Мужчина может любить двух женщин, но лишь до тех пор, пока одна из них не поймет, в чем дело
-    </p>
-    <cedra-profile-tags />
+    <div class="profile__content">
+      <cedra-avatar url="#" />
+      <h2 class="profile__name">Онласын Саяжанна, 14</h2>
+      <p class="profile__description">
+        Независимая женщина — это женщина, которая не нашла никого, кто хотел бы
+        зависеть от нее. Мужчина может любить двух женщин, но лишь до тех пор,
+        пока одна из них не поймет, в чем дело
+      </p>
+    </div>
+    <cedra-profile-tags class="profile__tags" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import CedraNav from "@/components/common/cedra-nav.component.vue";
-import CedraProfileImg from "@/components/profile/cedra-profile-img.component.vue";
+import CedraAvatar from "@/components/profile/cedra-avatar.component.vue";
 import CedraProfileTags from "@/components/profile/cedra-profile-tags.component.vue";
 
 export default defineComponent({
   components: {
     "cedra-nav": CedraNav,
-    "cedra-profile-img": CedraProfileImg,
+    "cedra-avatar": CedraAvatar,
     "cedra-profile-tags": CedraProfileTags,
   },
 });
@@ -29,20 +31,31 @@ export default defineComponent({
 
 <style scoped>
 .profile {
-  width: 100vw;
   height: 100vh;
 }
 
+.profile__content {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .profile__name {
-  padding: 0 10%;
-  color: rgb(71, 71, 71);
+  margin: 20px 0 0;
   font-size: 25px;
-  font-weight: 700;
+  font-weight: 600;
   text-align: center;
 }
 
-.profile__desc {
-  padding: 0 5%;
+.profile__description {
+  margin: 8px 0 0;
+  color: rgba(0, 0, 0, 0.7);
   text-align: center;
+}
+
+.profile__tags {
+  margin-top: 20px;
+  border: 1px solid red;
 }
 </style>

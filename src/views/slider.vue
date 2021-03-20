@@ -165,32 +165,4 @@ export default defineComponent({
   width: 100%;
   box-sizing: border-box;
 }
-
-.choices {
-  padding: 0 50px;
-  width: 100vw;
-  box-sizing: border-box;
-  text-align: start;
-}
-
-.choices-title {
-  margin: 0;
-  margin-bottom: 60px;
-  color: #3c3c3c;
-  font-size: 26px;
-  font-weight: bold;
-}
-</style>
-
-<style>
-/* .fade-enter-active,
-.fade-leave-active {
-  transition: opacity 2s ease;
-}
-
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-} */
 </style>

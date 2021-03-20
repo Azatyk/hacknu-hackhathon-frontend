@@ -1,5 +1,8 @@
 <template>
-  <ion-slides ref="slider" class="slides" pager="true" :options="slideOpts">
+  <ion-slides ref="slider" class="slider" :options="slideOpts">
+    <ion-slide>
+      <cedra-welcome-slide @next="next" />
+    </ion-slide>
     <ion-slide>
       <SlideContent
         :img="'/assets/slide1-image.svg'"
@@ -65,17 +68,21 @@ import { IonSlides, IonSlide } from "@ionic/vue";
 import { defineComponent } from "vue";
 import aituBridge from "@btsd/aitu-bridge";
 import SlideContent from "@/components/slider/cedra-slide-content.component.vue";
+import CedraWelcomeSlide from "@/components/slider/cedra-welcome-slide.component.vue";
 import choice from "@/components/slider/cedra-choice.component.vue";
 
 export default defineComponent({
   name: "Slider",
-
   props: {
     isSliderOpen: Boolean,
   },
-
-  components: { SlideContent, IonSlides, IonSlide, choice },
-
+  components: {
+    SlideContent,
+    IonSlides,
+    IonSlide,
+    choice,
+    "cedra-welcome-slide": CedraWelcomeSlide,
+  },
   data() {
     return {
       userName: "",
@@ -90,7 +97,6 @@ export default defineComponent({
           name: "Не определился",
         },
       ],
-
       preferencesArray: [
         {
           name: "Мужчины",
@@ -102,7 +108,6 @@ export default defineComponent({
           name: "Другое",
         },
       ],
-
       orientationArray: [
         {
           name: "Гетеросекусал",
@@ -119,36 +124,29 @@ export default defineComponent({
       ],
     };
   },
-
   async mounted() {
     await this.getUser();
   },
-
   methods: {
     next() {
       this.$el.slideNext();
     },
-
     closeSlider() {
       this.$emit("close-slider");
     },
-
     async getUser() {
       const res = await aituBridge.getMe();
       this.userName = res.name;
     },
-
     handleGendersChoice(event: any) {
       console.log(event);
     },
-
     handlePreferencesChoice(event: any) {
       event.forEach((element: any) => {
         console.log(element);
       });
     },
   },
-
   setup() {
     const slideOpts = {
       initialSlide: 0,
@@ -160,10 +158,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.slides {
+.slider {
   height: 100vh;
   width: 100%;
-  z-index: 5;
+  box-sizing: border-box;
 }
 
 .choices {

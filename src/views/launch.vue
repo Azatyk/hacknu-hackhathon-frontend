@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { mapMutations } from "vuex";
 import aituBridge from "@btsd/aitu-bridge";
 import { detailUserRequest } from "@/requests/users";
 
@@ -21,12 +22,16 @@ export default defineComponent({
       const res = await aituBridge.getPhone();
       return res.phone;
     },
+    ...mapMutations(["setUser"]),
   },
   async beforeMount() {
     if (aituBridge.isSupported()) {
       const phoneNumber = await this.getUserPhoneNumber();
       detailUserRequest(phoneNumber)
-        .then(this.navigateToFeed)
+        .then((content) => {
+          this.setUser(content.user);
+          this.navigateToFeed();
+        })
         .catch(this.navigateToSlider);
     } else {
       this.navigateToSlider();

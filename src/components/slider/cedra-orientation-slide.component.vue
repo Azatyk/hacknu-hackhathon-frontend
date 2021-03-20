@@ -37,7 +37,6 @@ import {
   IonRadio,
   IonRadioGroup,
 } from "@ionic/vue";
-import orientations from "@/data/orientations";
 
 export default defineComponent({
   components: {
@@ -47,8 +46,10 @@ export default defineComponent({
     IonRadio,
     IonRadioGroup,
   },
+  props: {
+    orientations: Array,
+  },
   data: () => ({
-    orientations,
     orientationId: 0,
   }),
   methods: {

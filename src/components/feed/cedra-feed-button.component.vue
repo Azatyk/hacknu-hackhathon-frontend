@@ -31,7 +31,7 @@ export default defineComponent({
   border: none;
   border-radius: 80px;
   outline: none;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
 }
 
 .button-icon {

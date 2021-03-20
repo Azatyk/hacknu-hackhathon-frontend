@@ -1,7 +1,7 @@
 <template>
   <nav class="nav">
     <router-link :to="{ name: 'feed' }" exact class="nav__link">
-      <i class="fas fa-lemon nav__link-icon"></i>
+      <i class="fas fa-lemon nav__link-icon nav__link-icon_lemon"></i>
     </router-link>
     <router-link :to="{ name: 'likes' }" class="nav__link">
       <i class="bx bxs-heart nav__link-icon"></i>
@@ -24,7 +24,7 @@ export default defineComponent({});
 
 <style scoped>
 .nav {
-  padding: 30px 50px;
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,6 +32,7 @@ export default defineComponent({});
 }
 
 .nav__link {
+  padding: 10px 20px;
   color: #bdc3ce;
   font-size: 26px;
 }
@@ -42,5 +43,10 @@ export default defineComponent({});
 
 .nav__link-icon {
   font-size: 30px;
+}
+
+.nav__link-icon_lemon {
+  margin-bottom: 6px;
+  font-size: 26px;
 }
 </style>

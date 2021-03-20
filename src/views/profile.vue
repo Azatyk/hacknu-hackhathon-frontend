@@ -10,7 +10,7 @@
         пока одна из них не поймет, в чем дело
       </p>
     </div>
-    <cedra-profile-tags class="profile__tags" />
+    <cedra-tags class="profile__tags" />
   </div>
 </template>
 
@@ -18,13 +18,13 @@
 import { defineComponent } from "vue";
 import CedraNav from "@/components/common/cedra-nav.component.vue";
 import CedraAvatar from "@/components/profile/cedra-avatar.component.vue";
-import CedraProfileTags from "@/components/profile/cedra-profile-tags.component.vue";
+import CedraTags from "@/components/profile/cedra-tags.component.vue";
 
 export default defineComponent({
   components: {
     "cedra-nav": CedraNav,
     "cedra-avatar": CedraAvatar,
-    "cedra-profile-tags": CedraProfileTags,
+    "cedra-tags": CedraTags,
   },
 });
 </script>
@@ -35,14 +35,14 @@ export default defineComponent({
 }
 
 .profile__content {
-  padding: 0 20px;
+  padding: 30px 20px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .profile__name {
-  margin: 20px 0 0;
+  margin: 30px 0 0;
   font-size: 25px;
   font-weight: 600;
   text-align: center;
@@ -55,7 +55,6 @@ export default defineComponent({
 }
 
 .profile__tags {
-  margin-top: 20px;
-  border: 1px solid red;
+  margin-top: 30px;
 }
 </style>

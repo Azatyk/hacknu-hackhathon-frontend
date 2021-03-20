@@ -1,103 +1,78 @@
 <template>
-  <ion-slides ref="slider" class="slides" pager="true" :options="slideOpts">
+  <ion-slides class="slider" :options="sliderOptions">
     <ion-slide>
-      <SlideContent
-        :img="'/assets/slide1-image.svg'"
-        v-bind:title="`Привет, ${userName || 'друг'}. Мы рады, что ты с нами`"
-        v-bind:description="'Cedra поможет найти твою вторую половинку. Давай покажу, что дальше'"
-        v-bind:button-label="'Начать'"
-        v-on:next-click="next()"
-        v-on:close-slider="closeSlider()"
-      ></SlideContent>
+      <cedra-welcome-slide @next="navigateToNextSlide" />
     </ion-slide>
     <ion-slide>
-      <SlideContent
-        v-bind:img="'/assets/slide2-image.svg'"
-        v-bind:title="'Добавь фотографию'"
-        v-bind:description="'Нужна лишь одна фотография, ее будут видеть все остальные'"
-        v-bind:button-label="'Дальше'"
-        v-on:next-click="next()"
-        v-on:close-slider="closeSlider()"
-      ></SlideContent>
+      <cedra-age-slide @next="navigateToNextSlide" />
     </ion-slide>
     <ion-slide>
-      <SlideContent
-        v-bind:img="'/assets/slide3-image.svg'"
-        v-bind:title="'Ставь лайки понравившимся людям'"
-        v-bind:description="'Ставьте лайки людям, которые вам по душе и ждите от них взаимности'"
-        v-bind:button-label="'Дальше'"
-        v-on:next-click="next()"
-        v-on:close-slider="closeSlider()"
-      ></SlideContent>
-    </ion-slide>
-    <ion-slide>
-      <SlideContent
-        v-bind:img="'/assets/slide4-image.svg'"
-        v-bind:title="'Создавай пары и общайся'"
-        v-bind:description="'Получайте взаимные лайки и создавайте лимонные пары'"
-        v-bind:button-label="'Понятно'"
-        :nextSlideLink="false"
-        v-on:close-slider="closeSlider()"
-      ></SlideContent>
+      <cedra-gender-slide @next="navigateToNextSlide" />
     </ion-slide>
   </ion-slides>
 </template>
 
 <script lang="ts">
-import { IonSlides, IonSlide } from "@ionic/vue";
 import { defineComponent } from "vue";
+import { IonSlides, IonSlide } from "@ionic/vue";
 import aituBridge from "@btsd/aitu-bridge";
-import SlideContent from "@/components/slider/cedra-slide-content.component.vue";
+import CedraWelcomeSlide from "@/components/slider/cedra-welcome-slide.component.vue";
+import CedraAgeSlide from "@/components/slider/cedra-age-slide.component.vue";
+import CedraGenderSlide from "@/components/slider/cedra-gender-slide.component.vue";
 
 export default defineComponent({
-  name: "Slider",
-
-  props: {
-    isSliderOpen: Boolean,
+  components: {
+    IonSlides,
+    IonSlide,
+    "cedra-welcome-slide": CedraWelcomeSlide,
+    "cedra-age-slide": CedraAgeSlide,
+    "cedra-gender-slide": CedraGenderSlide,
   },
-
-  components: { SlideContent, IonSlides, IonSlide },
-
-  data() {
-    return {
-      userName: "",
-    };
-  },
-
-  async mounted() {
-    await this.getUser();
-  },
-
+  data: () => ({
+    userName: "",
+  }),
   methods: {
-    next() {
+    navigateToNextSlide() {
       this.$el.slideNext();
     },
-
-    closeSlider() {
-      this.$emit("close-slider");
-    },
-
-    async getUser() {
+    async loadUser() {
       const res = await aituBridge.getMe();
       this.userName = res.name;
     },
   },
-
   setup() {
-    const slideOpts = {
+    const sliderOptions = {
       initialSlide: 0,
       speed: 400,
     };
-    return { slideOpts };
+    return { sliderOptions };
+  },
+  mounted() {
+    this.loadUser();
   },
 });
 </script>
 
 <style scoped>
-.slides {
+.slider {
   height: 100vh;
   width: 100%;
-  z-index: 5;
+  box-sizing: border-box;
+}
+
+.choices {
+  padding: 0 50px;
+  width: 100vw;
+  box-sizing: border-box;
+  text-align: start;
+}
+
+.choices-title {
+  margin: 0;
+  margin-bottom: 60px;
+  color: #3c3c3c;
+  font-size: 26px;
+  font-weight: bold;
 }
 </style>
 

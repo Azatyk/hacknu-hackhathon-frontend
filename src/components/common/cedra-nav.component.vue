@@ -15,6 +15,13 @@
   </nav>
 </template>
 
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+});
+</script>
+
 <style scoped>
 .nav {
   padding: 20px 40px;

@@ -68,7 +68,7 @@ export default defineComponent({
   color: white;
   height: 39px;
   font-size: 16px;
-  width: 180px;
+  width: 90%;
   background: #ff8430;
   margin: 20px auto 0 auto;
 }

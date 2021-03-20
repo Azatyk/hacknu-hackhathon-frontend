@@ -17,7 +17,7 @@
       <div class="questions__intro">
         <img src="/assets/loving-doodle.svg" alt="" class="questions__image">
       </div>
-      <h2 class="questions__heading">Поздравляю, вы ответили на все <br/> <span class="questions__heading_color" >вопросы</span>!</h2>
+      <h2 class="questions__heading">Поздравляю, вы ответили на <br/> все  <span class="questions__heading_color" >вопросы</span>!</h2>
       <p class="questions__desc">Чтобы укрепить свою любовь, вы должны смотреть в глаза своему партнеру в течение четырех минут. В тишине. Это трудно, но вы узнаете многое друг о друге</p>
     </div>
   </div>
@@ -60,6 +60,8 @@ export default defineComponent({
 }
 
 .questions__heading {
+  margin: 0 auto 20px auto;
+  width: 90%;
   font-size: 25px;
   font-weight: 700;
   text-align: center;

@@ -94,6 +94,10 @@ export default defineComponent({
   font-size: 20px;
 }
 
+.stepper__button:focus {
+  outline: none;
+}
+
 .stepper__button_disabled {
   color: rgba(108, 92, 231, 0.692);
 }

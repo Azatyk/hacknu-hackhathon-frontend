@@ -1,7 +1,7 @@
 <template>
   <nav class="nav">
     <router-link :to="{ name: 'feed' }" exact class="nav__link">
-      <i class="bx bxs-dice-5 nav__link-icon"></i>
+      <i class="fas fa-lemon nav__link-icon"></i>
     </router-link>
     <router-link :to="{ name: 'likes' }" class="nav__link">
       <i class="bx bxs-heart nav__link-icon"></i>

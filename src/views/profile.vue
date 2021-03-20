@@ -3,11 +3,11 @@
     <cedra-nav />
     <div class="profile__content">
       <cedra-avatar url="#" />
-      <h2 class="profile__name">Онласын Саяжанна, 14</h2>
+      <h2 class="profile__name">
+        {{ `${user.firstName || "Unknown"} ${user.lastName || ""}` }}, 14
+      </h2>
       <p class="profile__description">
-        Независимая женщина — это женщина, которая не нашла никого, кто хотел бы
-        зависеть от нее. Мужчина может любить двух женщин, но лишь до тех пор,
-        пока одна из них не поймет, в чем дело
+        {{ user.description }}
       </p>
     </div>
     <cedra-tags class="profile__tags" />
@@ -16,6 +16,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { mapGetters } from "vuex";
 import CedraNav from "@/components/common/cedra-nav.component.vue";
 import CedraAvatar from "@/components/profile/cedra-avatar.component.vue";
 import CedraTags from "@/components/profile/cedra-tags.component.vue";
@@ -26,6 +27,7 @@ export default defineComponent({
     "cedra-avatar": CedraAvatar,
     "cedra-tags": CedraTags,
   },
+  computed: mapGetters(["user"]),
 });
 </script>
 

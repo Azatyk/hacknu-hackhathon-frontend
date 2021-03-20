@@ -11,12 +11,14 @@
     </ion-slide>
     <ion-slide>
       <cedra-gender-slide
+        :genders="genders"
         @gender-change="handleGenderChange"
         @next="navigateToNextSlide"
       />
     </ion-slide>
     <ion-slide>
       <cedra-orientation-slide
+        :orientations="orientations"
         @orientation-change="handleOrientationChange"
         @next="navigateToNextSlide"
       />
@@ -32,9 +34,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { mapMutations, mapGetters } from "vuex";
 import { IonSlides, IonSlide, loadingController } from "@ionic/vue";
 import aituBridge from "@btsd/aitu-bridge";
 import { createUserRequest } from "@/requests/users";
+import { fetchOptionsRequest } from "@/requests/options";
 import { CreateUserDto } from "@/dto/create-user.dto";
 import CedraWelcomeSlide from "@/components/slider/cedra-welcome-slide.component.vue";
 import CedraAgeSlide from "@/components/slider/cedra-age-slide.component.vue";
@@ -65,6 +69,7 @@ export default defineComponent({
       orientationId: 0,
     },
   }),
+  computed: mapGetters(["genders", "orientations"]),
   methods: {
     navigateToNextSlide() {
       this.$el.slideNext();
@@ -95,9 +100,7 @@ export default defineComponent({
       await loading.present();
       const user: CreateUserDto = this.user;
       createUserRequest(user)
-        .then(() => {
-          this.$router.push({ name: "feed" });
-        })
+        .then(() => this.$router.push({ name: "feed" }))
         .finally(() => loading.dismiss());
     },
     createLoading() {
@@ -105,6 +108,14 @@ export default defineComponent({
         message: "Почти закончили...",
       });
     },
+    loadOptions() {
+      fetchOptionsRequest().then((content) => {
+        const { genders, orientations } = content;
+        this.setGenders(genders);
+        this.setOrientations(orientations);
+      });
+    },
+    ...mapMutations(["setGenders", "setOrientations"]),
   },
   setup() {
     const sliderOptions = {
@@ -113,11 +124,12 @@ export default defineComponent({
     };
     return { sliderOptions };
   },
-  mounted() {
+  beforeMount() {
     if (aituBridge.isSupported()) {
       this.loadUser();
       this.loadPhoneNumber();
     }
+    this.loadOptions();
   },
 });
 </script>

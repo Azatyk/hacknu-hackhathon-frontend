@@ -37,7 +37,6 @@ import {
   IonRadio,
   IonRadioGroup,
 } from "@ionic/vue";
-import genders from "@/data/genders";
 
 export default defineComponent({
   components: {
@@ -47,8 +46,10 @@ export default defineComponent({
     IonRadio,
     IonRadioGroup,
   },
+  props: {
+    genders: Array,
+  },
   data: () => ({
-    genders,
     genderId: 0,
   }),
   methods: {

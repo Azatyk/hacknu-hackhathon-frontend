@@ -99,7 +99,7 @@ export default defineComponent({
 }
 
 .card {
-  margin: 20vh auto 0 auto;
+  margin: 10vh auto 0 auto;
   width: 90vw;
   display: flex;
   align-items: center;

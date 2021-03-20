@@ -24,7 +24,7 @@ export default defineComponent({});
 
 <style scoped>
 .nav {
-  padding: 30px 40px;
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,6 +32,7 @@ export default defineComponent({});
 }
 
 .nav__link {
+  padding: 10px 20px;
   color: #bdc3ce;
   font-size: 26px;
 }

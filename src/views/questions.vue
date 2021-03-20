@@ -3,7 +3,7 @@
     <cedra-nav />
     <div v-if="!stepperVisible && !outroVisible" class="questions">
       <div class="questions__intro">
-        <img src="/assets/loving-doodle.svg" alt="" class="questions__image">
+        <img src="/assets/images/loving-doodle.svg" alt="" class="questions__image">
       </div>
       <h2 class="questions__heading">Вопросы, чтобы <br/> <span class="questions__heading_color" >влюбиться</span></h2>
       <p class="questions__desc">Задайте эти вопросы друг другу и узнайте своего партнера ещё лучше</p>
@@ -15,7 +15,7 @@
     <cedra-questions-stepper @finish="handleFinish" v-else-if="stepperVisible" />
     <div v-if="outroVisible" class="questions">
       <div class="questions__intro">
-        <img src="/assets/loving-doodle.svg" alt="" class="questions__image">
+        <img src="/assets/images/loving-doodle.svg" alt="" class="questions__image">
       </div>
       <h2 class="questions__heading">Поздравляю, вы ответили на <br/> все  <span class="questions__heading_color" >вопросы</span>!</h2>
       <p class="questions__desc">Чтобы укрепить свою любовь, вы должны смотреть в глаза своему партнеру в течение четырех минут. В тишине. Это трудно, но вы узнаете многое друг о друге</p>

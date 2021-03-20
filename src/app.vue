@@ -14,5 +14,9 @@ export default defineComponent({
     IonApp,
     IonRouterOutlet,
   },
+
+  beforeMount() {
+    this.$router.push("/slider");
+  },
 });
 </script>

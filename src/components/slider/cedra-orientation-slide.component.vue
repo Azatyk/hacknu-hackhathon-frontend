@@ -7,7 +7,11 @@
         class="orientation-slide__image"
       />
       <h1 class="orientation-slide__heading">Какая у тебя ориентация?</h1>
-      <ion-radio-group v-model="orientationId" class="orientation-slide__radio">
+      <ion-radio-group
+        v-model="orientationId"
+        class="orientation-slide__radio"
+        @ion-change="handleRadioChange"
+      >
         <ion-item v-for="orientation in orientations" :key="orientation.id">
           <ion-label>{{ orientation.name }}</ion-label>
           <ion-radio :value="orientation.id"></ion-radio>
@@ -15,9 +19,10 @@
       </ion-radio-group>
     </div>
     <ion-button
-      @click="$emit('next')"
+      :disabled="!orientationId"
       expand="block"
       class="orientation-slide__bottom-button"
+      @click="$emit('next')"
       >Дальше</ion-button
     >
   </div>
@@ -44,8 +49,14 @@ export default defineComponent({
   },
   data: () => ({
     orientations,
-    orientationId: null,
+    orientationId: 0,
   }),
+  methods: {
+    handleRadioChange(event) {
+      const { value } = event.target;
+      this.$emit("orientation-change", value);
+    },
+  },
 });
 </script>
 

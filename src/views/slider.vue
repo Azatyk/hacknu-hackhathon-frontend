@@ -16,7 +16,10 @@
       />
     </ion-slide>
     <ion-slide>
-      <cedra-orientation-slide @next="navigateToNextSlide" />
+      <cedra-orientation-slide
+        @orientation-change="handleOrientationChange"
+        @next="navigateToNextSlide"
+      />
     </ion-slide>
     <!-- <ion-slide>
       <cedra-description-slide @next="navigateToNextSlide" />
@@ -75,7 +78,9 @@ export default defineComponent({
     },
     handleGenderChange(genderId: number) {
       this.user.genderId = genderId;
-      console.log(this.user.genderId);
+    },
+    handleOrientationChange(orientationId: number) {
+      this.user.orientationId = orientationId;
     },
   },
   setup() {

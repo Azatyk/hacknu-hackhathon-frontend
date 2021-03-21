@@ -2,9 +2,11 @@
   <div class="profile">
     <cedra-nav />
     <div class="profile__content">
-      <cedra-avatar url="#" />
+      <cedra-avatar
+        :url="`/assets/images/avatars/avatar-${getRandomAvatarNumber()}.png`"
+      />
       <h2 class="profile__name">
-        {{ `${user.firstName || "Unknown"} ${user.lastName || ""}` }}, 14
+        {{ `${user.firstName || "Unknown"} ${user.lastName || ""}` }}
       </h2>
       <p class="profile__description">
         {{ user.description }}
@@ -28,6 +30,14 @@ export default defineComponent({
     "cedra-tags": CedraTags,
   },
   computed: mapGetters(["user"]),
+  methods: {
+    getRandomAvatarNumber() {
+      return Math.floor(Math.random() * 5) + 1;
+    },
+  },
+  beforeMount() {
+    console.log(this.getRandomAvatarNumber());
+  },
 });
 </script>
 

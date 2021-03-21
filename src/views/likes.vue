@@ -1,25 +1,29 @@
 <template>
   <div class="likes-page">
     <cedra-nav />
-    <ion-segment
-      class="likes-segment"
-      type="ios"
-      @ionChange="changeActiveSlide($event)"
-      :value="activeSlide"
-    >
-      <ion-segment-button :value="1">
-        <ion-label>Понравились</ion-label>
-      </ion-segment-button>
-      <ion-segment-button :value="2">
-        <ion-label>Понравился</ion-label>
-      </ion-segment-button>
-      <ion-segment-button :value="3">
-        <ion-label>Совпадения</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+    <div class="segment">
+      <span
+        class="segment-label"
+        :class="{ 'segment-label-active': activeSlide == 1 }"
+        @click="activeSlide = 1"
+        >Мне понравились</span
+      >
+      <span
+        class="segment-label"
+        :class="{ 'segment-label-active': activeSlide == 2 }"
+        @click="activeSlide = 2"
+        >{{
+          user.genderId == 1
+            ? "Я понравился"
+            : user.genderId == 2
+            ? "Я понравилась"
+            : "Я понравился(-ась)"
+        }}</span
+      >
+    </div>
     <cedra-likes-slider
       :activeSlide="activeSlide"
-      @change-slide="changeActiveSlide"
+      @change-slide="activeSlide == 1 ? (activeSlide = 2) : (activeSlide = 1)"
     />
   </div>
 </template>
@@ -27,41 +31,49 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import CedraNav from "@/components/common/cedra-nav.component.vue";
-import { IonSegment, IonSegmentButton } from "@ionic/vue";
 import CedraLikesSlider from "@/components/likes/cedra-likes-slider.component.vue";
+import { mapGetters } from "vuex";
 
 export default defineComponent({
   components: {
     "cedra-nav": CedraNav,
-    IonSegment,
-    IonSegmentButton,
     CedraLikesSlider,
   },
   data: () => ({
     activeSlide: 1,
   }),
 
-  methods: {
-    changeActiveSlide(event: CustomEvent) {
-      const { detail } = event;
-      if (detail) {
-        this.activeSlide = detail;
-        console.log(this.activeSlide);
-      }
-    },
-  },
+  computed: mapGetters(["user"]),
 });
 </script>
 
 <style scoped>
-.likes-segment {
-  margin: auto;
-  margin-top: 20px;
-  width: 90%;
-}
-
 .slide {
   width: 100%;
   height: 70vh;
+}
+
+.segment {
+  margin: auto;
+  width: 84%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.segment-label {
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  box-sizing: border-box;
+  color: #6c5ce7;
+  border-radius: 10px;
+  transition: 200ms ease-in-out;
+}
+
+.segment-label-active {
+  border: 1px solid #6c5ce7;
+  transition: 200ms ease-in-out;
 }
 </style>

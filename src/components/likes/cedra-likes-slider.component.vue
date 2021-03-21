@@ -67,7 +67,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { IonSlide, IonSlides, toastController } from "@ionic/vue";
-// import users from "../../data/feed";
 import CedraLikedUser from "@/components/likes/cedra-liked-user.component.vue";
 import { getLikedByUserUsers, getLikedToUserUsers } from "@/requests/likes";
 import { mapGetters, mapMutations } from "vuex";
@@ -85,16 +84,22 @@ export default defineComponent({
     CedraLikedUser,
   },
   computed: mapGetters(["user", "likedByUser", "likedToUser"]),
-  //   watch: {
-  //     activeSlide() {
-  //       console.log("here");
-  //       console.log(this.activeSlide);
-  //     },
-  //   },
+  watch: {
+    activeSlide() {
+      if (this.activeSlide == 1) {
+        this.$el.lockSwipes(false);
+        this.$el.slideTo(-1);
+        this.$el.lockSwipes(true);
+      } else if (this.activeSlide == 2) {
+        this.$el.lockSwipes(false);
+        this.$el.slideTo(1);
+        this.$el.lockSwipes(true);
+      }
+    },
+  },
   mounted() {
-    console.log("mounted");
     this.$el.slideTo(-1);
-    // this.$el.lockSwipes(true);
+    this.$el.lockSwipes(true);
     getLikedByUserUsers(this.user.phoneNumber)
       .then((content) => {
         this.setLikedByUser(content.users);

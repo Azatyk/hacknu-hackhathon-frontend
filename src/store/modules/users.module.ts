@@ -6,7 +6,7 @@ interface State {
 
 export default {
   state: {
-    user: { phoneNumber: "77072050716" },
+    user: {},
   },
   mutations: {
     setUser(state: State, user: User) {

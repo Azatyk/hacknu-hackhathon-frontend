@@ -11,14 +11,14 @@
       :birthday="getUserAge(user.birthday)"
     />
     <transition name="fade">
-      <div v-if="currentUsers.length == 0" class="feed-empty">
+      <div v-if="currentUsers.length == 0" class="empty">
         <img
-          src="/assets/images/empty-feed.svg"
+          src="/assets/images/empty.svg"
           alt="Больше никого нету"
-          class="feed-empty-image"
+          class="empty-image"
         />
-        <h1 class="feed-empty-title">Нам больше не с кем тебя знакомить</h1>
-        <p class="feed-empty-description">
+        <h1 class="empty-title">Нам больше не с кем тебя знакомить</h1>
+        <p class="empty-description">
           Ты уже просмотрел(а) всех подходящих людей, но как только появятся
           новые — мы тебе обязательно сообщим
         </p>
@@ -121,7 +121,7 @@ export default defineComponent({
   transform: translateX(-100vw);
 }
 
-.feed-empty {
+.empty {
   margin: auto;
   margin-top: 50px;
   width: 80%;
@@ -129,12 +129,12 @@ export default defineComponent({
   text-align: center;
 }
 
-.feed-empty-image {
+.empty-image {
   margin-bottom: 30px;
   height: 240px;
 }
 
-.feed-empty-title {
+.empty-title {
   margin: 0;
   margin-bottom: 16px;
   color: #3c3c3c;
@@ -142,7 +142,7 @@ export default defineComponent({
   font-weight: 500;
 }
 
-.feed-empty-description {
+.empty-description {
   color: #3c3c3c;
   font-size: 16px;
   line-height: 1.4;

@@ -62,7 +62,6 @@ export default defineComponent({
 
 .profile__description {
   margin: 8px 0 0;
-  color: rgba(0, 0, 0, 0.7);
   text-align: center;
 }
 

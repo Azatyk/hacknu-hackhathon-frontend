@@ -89,7 +89,6 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid red;
 }
 
 .questions__content {

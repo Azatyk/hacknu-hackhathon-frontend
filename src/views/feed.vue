@@ -6,12 +6,15 @@
       :key="user.id"
       :id="user.id"
       class="feed-card-component"
-      :imagePath="user.avatar"
+      :imagePath="
+        user.avatar ||
+        `/assets/images/avatars/avatar-${getRandomAvatarNumber()}.png`
+      "
       :name="user.firstName"
       :birthday="getUserAge(user.birthday)"
     />
     <transition name="fade">
-      <div v-if="currentUsers.length == 0" class="empty">
+      <div v-if="currentUsers" class="empty">
         <img
           src="/assets/images/empty.svg"
           alt="Больше никого нету"
@@ -25,7 +28,7 @@
       </div>
     </transition>
     <transition name="fade">
-      <div v-if="currentUsers.length != 0" class="feed-buttons">
+      <div v-if="currentUsers" class="feed-buttons">
         <cedra-feed-button type="dislike" @click="handleDislikeButton" />
         <cedra-feed-button type="like" @click="handleLikeButton" />
       </div>
@@ -38,12 +41,15 @@ import { defineComponent } from "vue";
 import CedraNav from "@/components/common/cedra-nav.component.vue";
 import CedraFeedCard from "@/components/feed/cedra-feed-card.component.vue";
 import CedraFeedButton from "@/components/feed/cedra-feed-button.component.vue";
-import users from "@/data/feed";
+import { toastController } from "@ionic/vue";
+import { getFeedUsers, addReaction } from "@/requests/feed";
+import { mapGetters } from "vuex";
 
 interface User {
   id: number;
   firstName: string;
   avatar: string;
+  phoneNumber: string;
 }
 
 export default defineComponent({
@@ -53,22 +59,42 @@ export default defineComponent({
     CedraFeedButton,
   },
   data: () => ({
-    users,
+    users: [],
     currentUsers: new Array<User>(),
     lastCurrentUserIndex: 0,
     activeUserId: 0,
   }),
+  computed: mapGetters(["user"]),
   mounted() {
-    for (let i = 0; i < 5; i++) {
-      this.currentUsers.push(this.users[this.lastCurrentUserIndex]);
-      this.lastCurrentUserIndex++;
-      this.activeUserId = this.currentUsers[0].id;
-    }
+    getFeedUsers(this.user.phoneNumber)
+      .then((content) => {
+        this.users = content.suggestions;
+
+        if (this.users.length > 5) {
+          for (let i = 0; i < 5; i++) {
+            this.currentUsers.push(this.users[this.lastCurrentUserIndex]);
+            this.lastCurrentUserIndex++;
+            this.activeUserId = this.currentUsers[0].id;
+          }
+        } else {
+          for (let i = 0; i < this.users.length; i++) {
+            this.currentUsers.push(this.users[this.lastCurrentUserIndex]);
+            this.lastCurrentUserIndex++;
+            this.activeUserId = this.currentUsers[0].id;
+          }
+        }
+      })
+      .catch(this.openErrorToast);
   },
 
   methods: {
     handleDislikeButton() {
-      console.log("dislike button clicked");
+      const payload = {
+        phoneNumber: this.currentUsers[0].phoneNumber,
+        like: false,
+      };
+
+      addReaction(this.user.phoneNumber, payload).catch(this.openErrorToast);
       const activeUserCard = document.getElementById(
         String(this.currentUsers[0].id)
       );
@@ -82,7 +108,13 @@ export default defineComponent({
       }, 500);
     },
     handleLikeButton() {
-      console.log("like request");
+      const payload = {
+        phoneNumber: this.currentUsers[0].phoneNumber,
+        like: true,
+      };
+
+      addReaction(this.user.phoneNumber, payload).catch(this.openErrorToast);
+
       const activeUserCard = document.getElementById(
         String(this.currentUsers[0].id)
       );
@@ -96,10 +128,24 @@ export default defineComponent({
       }, 500);
     },
 
+    getRandomAvatarNumber() {
+      return Math.floor(Math.random() * 5) + 1;
+    },
+
     getUserAge(birthday: string) {
       const birthdayDate = new Date(Date.parse(birthday));
       const currentDate = new Date(Date.now());
       return currentDate.getFullYear() - birthdayDate.getFullYear();
+    },
+
+    async openErrorToast() {
+      const toast = await toastController.create({
+        message: "Ошибка при загрузке данных",
+        position: "top",
+        color: "danger",
+        duration: 1000,
+      });
+      return toast.present();
     },
   },
 });
@@ -137,13 +183,11 @@ export default defineComponent({
 .empty-title {
   margin: 0;
   margin-bottom: 16px;
-  color: #3c3c3c;
   font-size: 26px;
   font-weight: 500;
 }
 
 .empty-description {
-  color: #3c3c3c;
   font-size: 16px;
   line-height: 1.4;
   opacity: 0.7;

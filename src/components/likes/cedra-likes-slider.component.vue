@@ -24,7 +24,7 @@
         </p>
       </div>
     </ion-slide>
-    <ion-slide class="slide">
+    <ion-slide class="slide liked-users">
       <cedra-liked-user
         v-for="user in likedToUser"
         :key="user.id"
@@ -70,7 +70,7 @@ import { IonSlide, IonSlides, toastController } from "@ionic/vue";
 // import users from "../../data/feed";
 import CedraLikedUser from "@/components/likes/cedra-liked-user.component.vue";
 import { getLikedByUserUsers, getLikedToUserUsers } from "@/requests/likes";
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default defineComponent({
   props: {
@@ -84,11 +84,7 @@ export default defineComponent({
     IonSlide,
     CedraLikedUser,
   },
-  data: () => ({
-    likedByUser: [],
-    likedToUser: [],
-  }),
-  computed: mapGetters(["user"]),
+  computed: mapGetters(["user", "likedByUser", "likedToUser"]),
   //   watch: {
   //     activeSlide() {
   //       console.log("here");
@@ -96,19 +92,23 @@ export default defineComponent({
   //     },
   //   },
   mounted() {
+    console.log("mounted");
     this.$el.slideTo(-1);
     // this.$el.lockSwipes(true);
     getLikedByUserUsers(this.user.phoneNumber)
       .then((content) => {
-        this.likedByUser = content.users;
+        this.setLikedByUser(content.users);
       })
       .catch(this.openErrorToast);
 
     getLikedToUserUsers(this.user.phoneNumber)
-      .then((content) => (this.likedToUser = content.users))
+      .then((content) => {
+        this.setLikedToUser(content.users);
+      })
       .catch(this.openErrorToast);
   },
   methods: {
+    ...mapMutations(["setLikedByUser", "setLikedToUser"]),
     getUserAge(birthday: string) {
       const birthdayDate = new Date(Date.parse(birthday));
       const currentDate = new Date(Date.now());

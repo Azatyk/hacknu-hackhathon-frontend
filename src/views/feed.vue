@@ -10,18 +10,20 @@
       :name="user.firstName"
       :birthday="getUserAge(user.birthday)"
     />
-    <div class="feed-empty">
-      <img
-        src="/assets/images/empty-feed.svg"
-        alt="Больше никого нету"
-        class="feed-empty-image"
-      />
-      <h1 class="feed-empty-title">Нам больше не с кем тебя познакомить</h1>
-      <p class="feed-empty-description">
-        Ты уже просмотрел(а) всех подоходящих людей, но как только появятся
-        новые — мы тебе обязательно сообщим
-      </p>
-    </div>
+    <transition name="fade">
+      <div v-if="currentUsers.length == 0" class="feed-empty">
+        <img
+          src="/assets/images/empty-feed.svg"
+          alt="Больше никого нету"
+          class="feed-empty-image"
+        />
+        <h1 class="feed-empty-title">Нам больше не с кем тебя знакомить</h1>
+        <p class="feed-empty-description">
+          Ты уже просмотрел(а) всех подходящих людей, но как только появятся
+          новые — мы тебе обязательно сообщим
+        </p>
+      </div>
+    </transition>
     <transition name="fade">
       <div v-if="currentUsers.length != 0" class="feed-buttons">
         <cedra-feed-button type="dislike" @click="handleDislikeButton" />

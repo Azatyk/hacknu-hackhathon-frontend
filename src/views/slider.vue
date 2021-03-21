@@ -110,7 +110,10 @@ export default defineComponent({
       await loading.present();
       const user: CreateUserDto = this.user;
       createUserRequest(user)
-        .then(() => this.$router.push({ name: "feed" }))
+        .then((content) => {
+          this.setUser(content.user);
+          this.$router.push({ name: "feed" });
+        })
         .catch(this.openErrorToast)
         .finally(() => loading.dismiss());
     },
@@ -137,7 +140,7 @@ export default defineComponent({
       });
       return toast.present();
     },
-    ...mapMutations(["setGenders", "setOrientations"]),
+    ...mapMutations(["setGenders", "setOrientations", "setUser"]),
   },
   setup() {
     const sliderOptions = {

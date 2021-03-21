@@ -31,6 +31,7 @@ export default defineComponent({
   border: none;
   border-radius: 80px;
   outline: none;
+  background-color: white;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
 }
 

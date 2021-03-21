@@ -123,7 +123,7 @@ export default defineComponent({
   justify-content: center;
   color: #6c5ce7;
   font-size: 20px;
-  background: white;
+  background: transparent;
 }
 
 .stepper__icon {

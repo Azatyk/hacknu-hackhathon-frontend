@@ -65,7 +65,6 @@ export default defineComponent({
 
 .welcome-slide__paragraph {
   text-align: center;
-  color: rgba(0, 0, 0, 0.7);
   font-size: 16px;
   line-height: 1.4;
 }

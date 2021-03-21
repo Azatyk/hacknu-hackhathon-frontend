@@ -35,9 +35,6 @@ export default defineComponent({
       return Math.floor(Math.random() * 5) + 1;
     },
   },
-  beforeMount() {
-    console.log(this.getRandomAvatarNumber());
-  },
 });
 </script>
 

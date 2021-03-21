@@ -24,7 +24,7 @@ export default defineComponent({
 
 <style scoped>
 .liked-user {
-  margin: auto;
+  margin: 0 auto;
   padding: 5% 0;
   width: 85%;
   height: 75px;

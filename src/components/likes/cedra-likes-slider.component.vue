@@ -4,7 +4,10 @@
       <cedra-liked-user
         v-for="user in likedByUser"
         :key="user.id"
-        :avatar="user.avatar"
+        :avatar="
+          user.avatar ||
+          `/assets/images/avatars/avatar-${getRandomAvatarNumber()}.png`
+        "
         :firstName="user.firstName"
         :age="getUserAge(user.birthday)"
       />
@@ -25,7 +28,10 @@
       <cedra-liked-user
         v-for="user in likedToUser"
         :key="user.id"
-        :avatar="user.avatar"
+        :avatar="
+          user.avatar ||
+          `/assets/images/avatars/avatar-${getRandomAvatarNumber()}.png`
+        "
         :firstName="user.firstName"
         :age="getUserAge(user.birthday)"
       />
@@ -96,17 +102,21 @@ export default defineComponent({
       .then((content) => {
         this.likedByUser = content.users;
       })
-      .catch(() => this.openErrorToast);
+      .catch(this.openErrorToast);
 
     getLikedToUserUsers(this.user.phoneNumber)
       .then((content) => (this.likedToUser = content.users))
-      .catch(() => this.openErrorToast);
+      .catch(this.openErrorToast);
   },
   methods: {
     getUserAge(birthday: string) {
       const birthdayDate = new Date(Date.parse(birthday));
       const currentDate = new Date(Date.now());
       return currentDate.getFullYear() - birthdayDate.getFullYear();
+    },
+
+    getRandomAvatarNumber() {
+      return Math.floor(Math.random() * 5) + 1;
     },
 
     async openErrorToast() {
@@ -158,13 +168,11 @@ export default defineComponent({
 .empty-title {
   margin: 0;
   margin-bottom: 16px;
-  color: #3c3c3c;
   font-size: 26px;
   font-weight: 500;
 }
 
 .empty-description {
-  color: #3c3c3c;
   font-size: 16px;
   line-height: 1.4;
   opacity: 0.7;

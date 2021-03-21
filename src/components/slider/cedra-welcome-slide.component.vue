@@ -10,7 +10,7 @@
         Привет, друг! Мы рады, что ты с нами
       </h1>
       <p class="welcome-slide__paragraph">
-        Мы в Цедре хотим помочь тебе тебе найти человека с которым можно выпить
+        Мы в Цедре хотим помочь тебе найти человека с которым можно выпить
         стакан лимонада
       </p>
     </div>
@@ -65,7 +65,6 @@ export default defineComponent({
 
 .welcome-slide__paragraph {
   text-align: center;
-  color: rgba(0, 0, 0, 0.7);
   font-size: 16px;
   line-height: 1.4;
 }

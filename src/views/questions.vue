@@ -10,7 +10,7 @@
         />
         <h2 class="questions__heading">Вопросы, чтобы влюбить и влюбиться</h2>
         <p class="questions__paragraph">
-          По очереди задавайте эти вопросы друг другу на первом свидании, чтобы
+          По очереди задавайте эти вопросы на первом свидании, чтобы
           ближе узнать друг друга. Вам точно будет о чем поговорить
         </p>
       </div>
@@ -112,7 +112,6 @@ export default defineComponent({
 
 .questions__paragraph {
   text-align: center;
-  color: rgba(0, 0, 0, 0.7);
   font-size: 16px;
   line-height: 1.4;
 }

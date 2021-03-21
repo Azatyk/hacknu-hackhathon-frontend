@@ -1,7 +1,7 @@
 <template>
   <div class="avatar">
     <img
-      src="https://i.pinimg.com/originals/f7/bf/c2/f7bfc2c9ef487bf92eb7f3f2fe868a05.jpg"
+      :src="url"
       class="avatar__image"
     />
   </div>

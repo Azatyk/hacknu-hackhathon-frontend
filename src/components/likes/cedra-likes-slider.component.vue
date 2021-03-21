@@ -1,17 +1,14 @@
 <template>
-  <ion-slides
-    :options="slideOpts"
-    @ionSlideDidChange="$emit('change-slide', getCurrentIndex())"
-  >
+  <ion-slides :options="slideOpts">
     <ion-slide class="slide liked-users">
       <cedra-liked-user
-        v-for="user in emptyArray"
+        v-for="user in likedByUser"
         :key="user.id"
         :avatar="user.avatar"
         :firstName="user.firstName"
         :age="getUserAge(user.birthday)"
       />
-      <div v-if="emptyArray.length == 0" class="empty">
+      <div v-if="likedByUser.length == 0" class="empty">
         <img
           src="/assets/images/empty.svg"
           alt="Ты ещё некого не лайкнул"
@@ -26,13 +23,13 @@
     </ion-slide>
     <ion-slide class="slide">
       <cedra-liked-user
-        v-for="user in emptyArray"
+        v-for="user in likedToUser"
         :key="user.id"
         :avatar="user.avatar"
         :firstName="user.firstName"
         :age="getUserAge(user.birthday)"
       />
-      <div v-if="emptyArray.length == 0" class="empty">
+      <div v-if="likedToUser.length == 0" class="empty">
         <img
           src="/assets/images/empty.svg"
           alt="Ты ещё некого не лайкнул"
@@ -63,9 +60,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { IonSlide, IonSlides } from "@ionic/vue";
+import { IonSlide, IonSlides, toastController } from "@ionic/vue";
 // import users from "../../data/feed";
 import CedraLikedUser from "@/components/likes/cedra-liked-user.component.vue";
+import { getLikedByUserUsers, getLikedToUserUsers } from "@/requests/likes";
+import { mapGetters } from "vuex";
 
 export default defineComponent({
   props: {
@@ -80,18 +79,28 @@ export default defineComponent({
     CedraLikedUser,
   },
   data: () => ({
-    // users,
-    emptyArray: [],
+    likedByUser: [],
+    likedToUser: [],
   }),
-  watch: {
-    activeSlide() {
-      console.log("here");
-      //   console.log(this.activeSlide);
-    },
-  },
+  computed: mapGetters(["user"]),
+  //   watch: {
+  //     activeSlide() {
+  //       console.log("here");
+  //       console.log(this.activeSlide);
+  //     },
+  //   },
   mounted() {
     this.$el.slideTo(-1);
-    this.$el.lockSwipes(true);
+    // this.$el.lockSwipes(true);
+    getLikedByUserUsers(this.user.phoneNumber)
+      .then((content) => {
+        this.likedByUser = content.users;
+      })
+      .catch(() => this.openErrorToast);
+
+    getLikedToUserUsers(this.user.phoneNumber)
+      .then((content) => (this.likedToUser = content.users))
+      .catch(() => this.openErrorToast);
   },
   methods: {
     getUserAge(birthday: string) {
@@ -100,8 +109,14 @@ export default defineComponent({
       return currentDate.getFullYear() - birthdayDate.getFullYear();
     },
 
-    getCurrentIndex() {
-      return this.$el.getActiveIndex();
+    async openErrorToast() {
+      const toast = await toastController.create({
+        message: "Ошибка при загрузке данных",
+        position: "top",
+        color: "danger",
+        duration: 1000,
+      });
+      return toast.present();
     },
   },
   setup() {
